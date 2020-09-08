@@ -1,0 +1,25 @@
+from flask import Flask,render_template,request,redirect,url_for
+from flask_sqlalchemy import SQLAlchemy
+import os
+
+app = Flask(__name__)
+
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./test.db'
+db_uri = os.environ.get('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+db = SQLAlchemy(app)
+
+class Test(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255))
+
+
+@app.route('/')
+def hello():
+    test = Test.query.first()
+    return test.title
+    #return "hello"
+
+if __name__ == '__main__':
+    #app.debug = True
+    app.run(host='0.0.0.0')
