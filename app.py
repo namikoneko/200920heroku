@@ -1,25 +1,25 @@
 from flask import Flask,render_template,request,redirect,url_for
-from flask_sqlalchemy import SQLAlchemy
 import os
+import dataset
 
 app = Flask(__name__)
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./test.db'
+db = dataset.connect('sqlite:///test.db')
+'''
 db_uri = os.environ.get('DATABASE_URL')
-app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
-db = SQLAlchemy(app)
+db = dataset.connect(db_uri)
+'''
 
-class Test(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(255))
-
+@app.route('/thread/<id>')
+def thread(id):
+    table = db['thread']
+    row = table.find_one(id=id)
+    return render_template('thread.html',row=row)
 
 @app.route('/')
 def hello():
-    test = Test.query.first()
-    return test.title
-    #return "hello"
+    return "hello"
 
 if __name__ == '__main__':
-    #app.debug = True
+    app.debug = True
     app.run(host='0.0.0.0')

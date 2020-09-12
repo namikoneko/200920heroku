@@ -1,0 +1,8 @@
+create table thread (
+id serial primary key,
+date date,
+postid integer,
+title varchar(255),
+text text,
+updated timestamp
+);
