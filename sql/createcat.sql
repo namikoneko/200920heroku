@@ -1,7 +1,6 @@
-CREATE TABLE post (
+CREATE TABLE cat (
 id integer primary key autoincrement,
 date text,
-catid integer,
 title text,
 text text,
 updated text

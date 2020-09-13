@@ -1,1 +1,1 @@
-alter table post add date date;
+alter table post add mydate text;

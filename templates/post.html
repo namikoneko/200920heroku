@@ -12,7 +12,11 @@
 
     <div class="post-title">
     {{ post.title }}
+{% for cat in cats %}
+    <a href="/cat/{{ cat.id }}">{{ cat.title }}</a>
+{% endfor %}
     <br>
+    <a href="/post/updcat/{{ post.id }}">cat_upd</a>
     <a href="/post/upd/{{ post.id }}">update</a>
     <a href="/post/del/{{ post.id }}">delete</a>
     </div><!-- post-title -->

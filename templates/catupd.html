@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="wrapper">
+	<h3>cat-update</h3>
+    <a href="/cat/{{ row.id }}">{{ row.title }}</a><br>
+    <form action="/cat/upd_exe" method="post">
+	<input type="hidden" name="id" value="{{ row.id }}">
+	<input type="text" name="title" value="{{ row.title }}">
+	<input type="submit" value="send">
+    </form>
+	<!--
+	-->
+    </div><!-- wrapper -->
+{% endblock %}

@@ -1,16 +1,27 @@
 from flask import Flask,render_template,request,redirect,url_for
+from datetime import date,datetime
 import os
 import dataset
+import time
+
 app = Flask(__name__)
 
 db = dataset.connect('sqlite:///test.db')
 
+@app.route('/time')
+def mytime():
+    return str(time.time())
+    #return date.today().strftime('%Y-%m-%d')
+
 @app.route('/rows')
 def rows():
-    rows = db['foo'].all()
-    return rows
+    id=1
+    table = db['thread']
+    row = table.find_one(id=id)
+    myint = row['postid']
 
-
+    return str(myint)
+    #return row
 
 @app.route('/join')
 def join():
