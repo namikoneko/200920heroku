@@ -14,7 +14,7 @@ db = dataset.connect(db_uri)
 # cat ============================================================
 @app.route('/cat/list')
 def catlist():
-    rows = db['cat'].all()
+    rows = db['cat'].find(order_by='-updated')
     return render_template('catlist.html',rows=rows)
 
 @app.route('/cat/ins_exe',methods=['POST'])
@@ -55,6 +55,15 @@ def catupd_exe():
 def catdel(id):
     table = db['cat']
     table.delete(id=id)
+    return redirect(url_for('catlist'))
+
+@app.route('/cat/up/<id>')
+def catup(id):
+    table = db['cat']
+    row = table.find_one(id=id)
+    updated = time.time()
+    data = dict(id=id, updated=updated)
+    table.update(data, ['id'])
     return redirect(url_for('catlist'))
 
 # post ============================================================
