@@ -5,6 +5,13 @@ app = Flask(__name__)
 
 db = dataset.connect('sqlite:///test.db')
 
+@app.route('/rows')
+def rows():
+    rows = db['foo'].all()
+    return rows
+
+
+
 @app.route('/join')
 def join():
     statement = 'select foo.b as b1,bar.b as b2 from foo inner join bar using (a)'

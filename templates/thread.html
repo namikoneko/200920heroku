@@ -5,5 +5,8 @@
         {{ row.id }}<br>
         {{ row.title }}<br>
         {{ row.text }}<br>
+    <hr>
+	<a href="/thread/upd/{{ row.id }}">update</a>
+	<a href="/thread/del/{{ row.id }}">delete</a>
 
 {% endblock %}

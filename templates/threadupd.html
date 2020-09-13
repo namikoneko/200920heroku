@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>thread-update</h3>
+<!--
+-->
+    <div class="post-form">
+    <form action="/thread/upd_exe" method="post">
+	<input type="hidden" name="id" value="{{ row.id }}">
+	<textarea name="text">{{ row.text }}</textarea><br>
+	<input type="submit" value="send">
+    </form>
+    </div><!-- post-form -->
+{% endblock %}
+    
