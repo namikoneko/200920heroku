@@ -1,8 +1,7 @@
-create table post (
+CREATE TABLE cat (
 id serial primary key,
 date varchar(255),
-catid integer,
-title varchar(255),
+title text,
 text text,
 updated varchar(255)
 );

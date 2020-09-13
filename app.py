@@ -6,11 +6,11 @@ from datetime import date,datetime
 
 app = Flask(__name__)
 
-'''
 db = dataset.connect('sqlite:///test.db')
 '''
 db_uri = os.environ.get('DATABASE_URL')
 db = dataset.connect(db_uri)
+'''
 # cat ============================================================
 @app.route('/cat/list')
 def catlist():
@@ -195,5 +195,5 @@ def hello():
     return "hello"
 
 if __name__ == '__main__':
-    app.debug = True
+    #app.debug = True
     app.run(host='0.0.0.0')
