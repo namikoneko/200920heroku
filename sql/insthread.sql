@@ -1,5 +1,5 @@
 insert into thread (
     postid,title,text
 ) values (
-    1,'title','text'
+    2,'title2','text2'
 );

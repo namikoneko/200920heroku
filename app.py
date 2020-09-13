@@ -4,21 +4,58 @@ import dataset
 
 app = Flask(__name__)
 
+'''
 db = dataset.connect('sqlite:///test.db')
 '''
 db_uri = os.environ.get('DATABASE_URL')
 db = dataset.connect(db_uri)
-'''
 
 # post ============================================================
+@app.route('/post/list')
+def postlist():
+    rows = db['post'].all()
+    return render_template('postlist.html',rows=rows)
+
 @app.route('/post/<id>')
 def postsingle(id):
-    statement = 'select post.title as ptitle from post inner join thread using (id)'
-    #statement = 'select post.id as pid post.title as ptitle thread.id as tid thread.text as ttext from post inner join thread using (id)'
-    rows = db.query(statement)
-    #post = rows.first()
-    return render_template('post.html',rows=rows)
-    #return render_template('post.html',rows=rows,post=post)
+    table = db['thread']
+    rows = table.find(postid=id)
+
+    table = db['post']
+    post = table.find_one(id=id)
+
+    return render_template('post.html',rows=rows,post=post)
+
+@app.route('/post/ins_exe',methods=['POST'])
+def postins_exe():
+    title = request.form['title']
+    table = db['post']
+    table.insert(dict(title=title))
+
+    return redirect(url_for('postlist'))
+
+@app.route('/post/upd/<id>')
+def postupd(id):
+    table = db['post']
+    row = table.find_one(id=id)
+    return render_template('postupd.html',row=row)
+
+@app.route('/post/upd_exe',methods=['POST'])
+def postupd_exe():
+    id = request.form['id']
+    title = request.form['title']
+    data = dict(id=id, title=title)
+    table = db['post']
+    table.update(data, ['id'])
+    return redirect(url_for('postsingle',id=id))
+
+@app.route('/post/del/<id>')
+def postdel(id):
+    table = db['post']
+    table.delete(id=id)
+    return redirect(url_for('postlist'))
+'''
+'''
 
 # thread ============================================================
 @app.route('/thread/<id>')
@@ -26,6 +63,15 @@ def threadsingle(id):
     table = db['thread']
     row = table.find_one(id=id)
     return render_template('thread.html',row=row)
+
+@app.route('/thread/ins_exe',methods=['POST'])
+def threadins_exe():
+    id = request.form['id']
+    text = request.form['text']
+    table = db['thread']
+    table.insert(dict(postid=id, text=text))
+
+    return redirect(url_for('postsingle',id=id))
 
 @app.route('/thread/upd/<id>')
 def threadupd(id):

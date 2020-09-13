@@ -2,8 +2,7 @@
 
 {% block content %}
 
-        {{ row.id }}<br>
-        {{ row.title }}<br>
+    <a href="/post/{{ row.postid }}">post</a><br>
         {{ row.text }}<br>
     <hr>
 	<a href="/thread/upd/{{ row.id }}">update</a>

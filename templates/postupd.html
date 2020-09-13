@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="wrapper">
+    <a href="/post/{{ row.id }}">{{ row.title }}</a><br>
+    <form action="/post/upd_exe" method="post">
+	<input type="hidden" name="id" value="{{ row.id }}">
+	<input type="text" name="title" value="{{ row.title }}">
+	<br>
+	<input type="submit" value="send">
+    </form>
+    </div><!-- wrapper -->
+	<!--
+	-->
+
+{% endblock %}

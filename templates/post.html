@@ -1,9 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <a href="/post/list">post-list</a>
+    <div class="post-form">
+    <form action="/thread/ins_exe" method="post">
+	<input type="hidden" name="id" value="{{ post.id }}"><br>
+	<textarea name="text"></textarea><br>
+	<input type="submit" value="send">
+    </form>
+    </div><!-- post-form -->
 
+    <div class="post-title">
+    {{ post.title }}
+    <br>
+    <a href="/post/upd/{{ post.id }}">update</a>
+    <a href="/post/del/{{ post.id }}">delete</a>
+    </div><!-- post-title -->
+
+    <hr>
 {% for row in rows %}
-    {{ row.ptitle }}
+    <div class="item">
+    {{ row.text }}
+	<a href="/thread/{{ row.id }}">thread</a>
+	<a href="/thread/up/{{ row.id }}">up</a>
+    </div><!-- item -->
 {% endfor %}
 
 {% endblock %}
