@@ -134,10 +134,10 @@ def postupdcat(id):
 
     table = db['cat']
     rowAs = table.find(id=row['catid'],order_by='-updated')
-    #rowBs = table.find(id!=row['catid'],order_by='-updated')
+    rowBs = table.find(id={'!=':row['catid']},order_by='-updated')
     #rowBs = db.query("select * from post where catid != " + row['catid'] + " order by updated desc")
     #rowBs = db.query("select * from cat where id != 1 order by updated desc")
-    rowBs = db.query('select * from cat where id != ' + str(row["catid"]) + ' order by updated desc')
+    #rowBs = db.query('select * from cat where id != ' + str(row["catid"]) + ' order by updated desc')
 
     return render_template('postupdcat.html',row=row,rowAs=rowAs,rowBs=rowBs)
 
