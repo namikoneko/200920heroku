@@ -4,13 +4,14 @@ import dataset
 import time
 from datetime import date,datetime
 
-app = Flask(__name__)
-
+'''
 db = dataset.connect('sqlite:///test.db')
 '''
 db_uri = os.environ.get('DATABASE_URL')
 db = dataset.connect(db_uri)
-'''
+
+app = Flask(__name__)
+
 # cat ============================================================
 @app.route('/cat/list')
 def catlist():
@@ -134,7 +135,7 @@ def postupdcat(id):
     #rowBs = table.find(id!=row['catid'],order_by='-updated')
     #rowBs = db.query("select * from post where catid != " + row['catid'] + " order by updated desc")
     #rowBs = db.query("select * from cat where id != 1 order by updated desc")
-    rowBs = db.query("select * from cat where id != " + str(row['catid']) + " order by updated desc")
+    rowBs = db.query('select * from cat where id != ' + str(row["catid"]) + ' order by updated desc')
 
     return render_template('postupdcat.html',row=row,rowAs=rowAs,rowBs=rowBs)
 
