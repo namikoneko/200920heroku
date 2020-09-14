@@ -22,8 +22,9 @@ def catlist():
 def catins_exe():
     title = request.form['title']
     mydate = date.today().strftime('%Y-%m-%d')
+    updated = time.time()
     table = db['cat']
-    table.insert(dict(title=title, date=mydate))
+    table.insert(dict(title=title, date=mydate, updated=updated))
 
     return redirect(url_for('catlist'))
 
@@ -90,8 +91,9 @@ def postsingle(id):
 def postins_exe():
     title = request.form['title']
     mydate = date.today().strftime('%Y-%m-%d')
+    updated = time.time()
     table = db['post']
-    table.insert(dict(title=title, date=mydate))
+    table.insert(dict(title=title, date=mydate, updated=updated))
 
     return redirect(url_for('postlist'))
 
@@ -160,8 +162,9 @@ def threadins_exe():
     id = request.form['id']
     text = request.form['text']
     mydate = date.today().strftime('%Y-%m-%d')
+    updated = time.time()
     table = db['thread']
-    table.insert(dict(postid=id, text=text, date=mydate))
+    table.insert(dict(postid=id, text=text, date=mydate, updated=updated))
 
     return redirect(url_for('postsingle',id=id))
 
