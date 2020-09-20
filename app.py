@@ -71,15 +71,6 @@ def tagup(id):
     table.update(data, ['id'])
     return redirect(url_for('taglist'))
 
-@app.route('/tag/up/<id>')
-def tagup(id):
-    table = db['tag']
-    row = table.find_one(id=id)
-    updated = time.time()
-    data = dict(id=id, updated=updated)
-    table.update(data, ['id'])
-    return redirect(url_for('taglist'))
-
 # cat ============================================================
 @app.route('/cat/list')
 def catlist():
