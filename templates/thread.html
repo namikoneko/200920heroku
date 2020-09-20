@@ -7,5 +7,18 @@
     <hr>
 	<a href="/thread/upd/{{ row.id }}">update</a>
 	<a href="/thread/del/{{ row.id }}">delete</a>
+    <hr>
+    used<br>
+    {% for joinrow in joinrows %}
+      {{ joinrow.title }}
+      <a href="/map/del/{{ joinrow.map_id }}/{{ row.id }}">del</a>
+    {% endfor %}
+    <hr>
+    nouse<br>
+    {% for nouserow in nouserows %}
+      {{ nouserow.title }}
+      <a href="/map/add/{{ nouserow.id }}/{{ row.id }}">add</a>
+    {% endfor %}
+    <hr>
 
 {% endblock %}

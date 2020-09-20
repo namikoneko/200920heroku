@@ -4,11 +4,11 @@ import dataset
 import time
 from datetime import date,datetime
 
-'''
 db = dataset.connect('sqlite:///test.db')
 '''
 db_uri = os.environ.get('DATABASE_URL')
 db = dataset.connect(db_uri)
+'''
 
 app = Flask(__name__)
 
@@ -150,12 +150,62 @@ def postupdcat_exe(catid,postid):
 
     return redirect(url_for('postupdcat',id=postid))
 
+# map ============================================================
+@app.route('/map/add/<tagid>/<threadid>')
+def mapadd(tagid,threadid):
+    tagid = tagid
+    threadid = threadid
+    mydate = date.today().strftime('%Y-%m-%d')
+    updated = time.time()
+    table = db['map']
+    table.insert(dict(tagid=tagid, threadid=threadid, date=mydate, updated=updated))
+
+    return redirect(url_for('threadsingle',id=threadid))
+
+@app.route('/map/del/<mapid>/<threadid>')
+def mapdel(mapid,threadid):
+    table = db['map']
+    table.delete(id=mapid)
+    return redirect(url_for('threadsingle',id=threadid))
+
 # thread ============================================================
 @app.route('/thread/<id>')
 def threadsingle(id):
-    table = db['thread']
-    row = table.find_one(id=id)
-    return render_template('thread.html',row=row)
+    row = db['thread'].find_one(id=id)
+
+    joinrows = db.query('SELECT tag.id as tag_id, tag.title, map.id as map_id, map.threadid as map_threadid FROM tag join map on tag.id = map.tagid where map.threadid=' + str(id) + ' order by tag.updated')
+
+    #使用されているtagのtagテーブルのidを配列で取得
+    usedtagids = []
+    for joinrow in joinrows:
+        usedtagids.append(joinrow['tag_id']) 
+
+    #すべてのtagのtagテーブルのidを配列で取得
+    tagids = []
+    tagrows = db['tag']
+    for tagrow in tagrows:
+        tagids.append(tagrow['id'])#tagのすべてのid 
+
+    #集合の差を取得
+    usedtagids_set = set(usedtagids)
+    tagids_set = set(tagids)
+    nousetags_set = tagids_set - usedtagids_set#集合の差を取得
+    nousetags = list(nousetags_set)
+    nouserows = db['tag'].find(id=nousetags)#使っていないtagを配列で検索
+
+    joinrows = db.query('SELECT tag.id as tag_id, tag.title, map.id as map_id, map.threadid as map_threadid FROM tag join map on tag.id = map.tagid where map.threadid=' + str(id) + ' order by tag.updated')
+
+    return render_template('thread.html',row=row,nouserows=nouserows,joinrows=joinrows)
+
+'''
+    usedtagids = []
+    maprows = db['map'].find(threadid=id)#threadidでmapを検索
+
+    for maprow in maprows:
+        usedtagids.append(maprow['tagid'])#mapのtagidを配列に
+
+    usedrows = db['tag'].find(id=usedtagids)#tagを配列で検索
+'''
 
 @app.route('/thread/ins_exe',methods=['POST'])
 def threadins_exe():
@@ -208,5 +258,5 @@ def hello():
     return "hello"
 
 if __name__ == '__main__':
-    #app.debug = True
+    app.debug = True
     app.run(host='0.0.0.0')

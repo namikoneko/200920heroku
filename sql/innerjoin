@@ -1,1 +1,0 @@
-select * from foo as f inner join bar using (a);
