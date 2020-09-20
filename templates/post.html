@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <h3>post-single</h3>
     <a href="/post/list">post-list</a>
     <div class="post-form">
     <form action="/thread/ins_exe" method="post">
@@ -22,6 +23,7 @@
     </div><!-- post-title -->
 
     <hr>
+    <div class="post-list">
 {% for row in rows %}
     <div class="item">
     {{ row.text }}
@@ -29,5 +31,6 @@
 	<a href="/thread/up/{{ row.id }}">up</a>
     </div><!-- item -->
 {% endfor %}
+</div><!-- post-list -->
 
 {% endblock %}

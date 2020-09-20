@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="wrapper">
 	<h3>post-list</h3>
 	<a href="/cat/list">cat-list</a>
 	<a href="/tag/list">tag-list</a>
@@ -17,6 +16,4 @@
         <a href="/post/up/{{ row.id }}">up</a>
     </div><!-- item -->
     {% endfor %}
-    </div><!-- post-list -->
-</html>
 {% endblock %}

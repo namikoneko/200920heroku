@@ -1,24 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <h3>thread-singel</h3>
 
     <a href="/post/{{ row.postid }}">post</a><br>
+<div class="post-title">
         {{ row.text }}<br>
+</div><!--post-title-->
     <hr>
 	<a href="/thread/upd/{{ row.id }}">update</a>
 	<a href="/thread/del/{{ row.id }}">delete</a>
     <hr>
     used<br>
     {% for joinrow in joinrows %}
-      {{ joinrow.title }}
+      <a href="/tag/{{ joinrow.tag_id }}">{{ joinrow.title }}</a>
       <a href="/map/del/{{ joinrow.map_id }}/{{ row.id }}">del</a>
     {% endfor %}
     <hr>
     nouse<br>
     {% for nouserow in nouserows %}
-      {{ nouserow.title }}
+      <a href="/tag/{{ nouserow.id }}">{{ nouserow.title }}</a>
       <a href="/map/add/{{ nouserow.id }}/{{ row.id }}">add</a>
     {% endfor %}
-    <hr>
-
 {% endblock %}

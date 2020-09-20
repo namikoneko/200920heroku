@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-    <div class="wrapper">
+    <h3>post-update-category</h3>
     <a href="/post/{{ row.id }}">post-single</a><br>
     {{ row.title }}
     <hr>
@@ -15,9 +14,4 @@
     {% for rowB in rowBs %}
 	<a href="/post/updcat_exe/{{ rowB.id }}/{{ row.id }}">{{ rowB.title }}</a><br>
     {% endfor %}
-	<!--
-	-->
-    <hr>
-
-    </div><!-- wrapper -->
 {% endblock %}
