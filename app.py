@@ -12,6 +12,74 @@ db = dataset.connect(db_uri)
 
 app = Flask(__name__)
 
+# tag ============================================================
+@app.route('/tag/list')
+def taglist():
+    rows = db['tag'].find(order_by='-updated')
+    return render_template('taglist.html',rows=rows)
+
+@app.route('/tag/ins_exe',methods=['POST'])
+def tagins_exe():
+    title = request.form['title']
+    mydate = date.today().strftime('%Y-%m-%d')
+    updated = time.time()
+    table = db['tag']
+    table.insert(dict(title=title, date=mydate, updated=updated))
+
+    return redirect(url_for('taglist'))
+
+@app.route('/tag/<id>')
+def tagsingle(id):
+    maprows = db['map'].find(tagid=id)
+
+    threadids = []
+    for maprow in maprows:
+        threadids.append(maprow['threadid'])
+
+    rows = db['thread'].find(id=threadids)
+
+    tag = db['tag'].find_one(id=id)
+
+    return render_template('tag.html',rows=rows,tag=tag)
+
+@app.route('/tag/upd/<id>')
+def tagupd(id):
+    row = db['tag'].find_one(id=id)
+    return render_template('tagupd.html',row=row)
+
+@app.route('/tag/upd_exe',methods=['POST'])
+def tagupd_exe():
+    id = request.form['id']
+    title = request.form['title']
+    data = dict(id=id, title=title)
+    table = db['tag']
+    table.update(data, ['id'])
+    return redirect(url_for('tagsingle',id=id))
+
+@app.route('/tag/del/<id>')
+def tagdel(id):
+    table = db['tag']
+    table.delete(id=id)
+    return redirect(url_for('taglist'))
+
+@app.route('/tag/up/<id>')
+def tagup(id):
+    table = db['tag']
+    row = table.find_one(id=id)
+    updated = time.time()
+    data = dict(id=id, updated=updated)
+    table.update(data, ['id'])
+    return redirect(url_for('taglist'))
+
+@app.route('/tag/up/<id>')
+def tagup(id):
+    table = db['tag']
+    row = table.find_one(id=id)
+    updated = time.time()
+    data = dict(id=id, updated=updated)
+    table.update(data, ['id'])
+    return redirect(url_for('taglist'))
+
 # cat ============================================================
 @app.route('/cat/list')
 def catlist():
@@ -173,7 +241,7 @@ def mapdel(mapid,threadid):
 def threadsingle(id):
     row = db['thread'].find_one(id=id)
 
-    joinrows = db.query('SELECT tag.id as tag_id, tag.title, map.id as map_id, map.threadid as map_threadid FROM tag join map on tag.id = map.tagid where map.threadid=' + str(id) + ' order by tag.updated')
+    joinrows = db.query('SELECT tag.id as tag_id, tag.title, map.id as map_id, map.threadid as map_threadid FROM tag join map on tag.id = map.tagid where map.threadid=' + str(id) + ' order by tag.updated desc')
 
     #使用されているtagのtagテーブルのidを配列で取得
     usedtagids = []

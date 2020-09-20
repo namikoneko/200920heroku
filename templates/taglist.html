@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
+
     <div class="wrapper">
-	<h3>post-list</h3>
-	<a href="/cat/list">cat-list</a>
-	<a href="/tag/list">tag-list</a>
-    <form action="/post/ins_exe" method="post">
+	<h3>tag-list</h3>
+	<a href="/post/list">post-list</a>
+    <form action="/tag/ins_exe" method="post">
 	<input type="text" name="title">
 	<input type="submit" value="send">
     </form>
@@ -13,10 +13,9 @@
     <div class="post-list">
     {% for row in rows %}
     <div class="item">
-        <a href="/post/{{ row.id }}">{{ row.title }}</a>
-        <a href="/post/up/{{ row.id }}">up</a>
+        <a href="/tag/{{ row.id }}">{{ row.title }}</a>
+        <a href="/tag/up/{{ row.id }}">up</a>
     </div><!-- item -->
     {% endfor %}
     </div><!-- post-list -->
-</html>
 {% endblock %}

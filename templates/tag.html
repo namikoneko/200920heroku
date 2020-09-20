@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="wrapper">
+	<h3>tag-single</h3>
+	<a href="/tag/list">tag-list</a>
+	<a href="/post/list">post-list</a>
+
+    <div class="post-title">
+    {{ tag.title }}<br>
+    <a href="/tag/upd/{{ tag.id }}">update</a>
+    <a href="/tag/del/{{ tag.id }}">delete</a>
+    </div><!-- post-title -->
+
+    <hr>
+    <div class="thread-list">
+    {% for row in rows %}
+    <div class="item">
+	<!--
+	-->
+	<a href="/thread/{{ row.id }}">{{ row.text }}</a>
+    </div><!-- item -->
+    {% endfor %}
+    </div><!-- thread-list -->
+    </div><!-- wrapper -->
+{% endblock %}

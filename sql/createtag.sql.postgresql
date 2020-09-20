@@ -1,0 +1,7 @@
+CREATE TABLE tag (
+id serial primary key,
+date varchar(255),
+title varchar(255),
+text text,
+updated varchar(255)
+);
