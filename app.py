@@ -4,11 +4,11 @@ import dataset
 import time
 from datetime import date,datetime
 
+'''
 db = dataset.connect('sqlite:///test.db')
 '''
 db_uri = os.environ.get('DATABASE_URL')
 db = dataset.connect(db_uri)
-'''
 
 app = Flask(__name__)
 
@@ -317,5 +317,5 @@ def hello():
     return "hello"
 
 if __name__ == '__main__':
-    app.debug = True
+    #app.debug = True
     app.run(host='0.0.0.0')
