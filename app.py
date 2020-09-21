@@ -3,6 +3,7 @@ import os
 import dataset
 import time
 from datetime import date,datetime
+from flaskext.markdown import Markdown
 
 '''
 db = dataset.connect('sqlite:///test.db')
@@ -11,6 +12,8 @@ db_uri = os.environ.get('DATABASE_URL')
 db = dataset.connect(db_uri)
 
 app = Flask(__name__)
+
+Markdown(app)
 
 # tag ============================================================
 @app.route('/tag/list')
@@ -310,6 +313,11 @@ def threadup(id):
     data = dict(id=id, updated=updated)
     table.update(data, ['id'])
     return redirect(url_for('postsingle',id=postid))
+
+# filter ============================================================
+@app.template_filter('cr')
+def cr(arg):
+    return Markup(arg.replace('\r', '<br>'))
 
 #============================================================
 @app.route('/')

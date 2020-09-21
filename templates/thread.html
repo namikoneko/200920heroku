@@ -5,7 +5,7 @@
 
     <a href="/post/{{ row.postid }}">post</a><br>
 <div class="post-title">
-        {{ row.text }}<br>
+	{{ row.text|cr|markdown }}<br>
 </div><!--post-title-->
     <hr>
 	<a href="/thread/upd/{{ row.id }}">update</a>
