@@ -2,19 +2,12 @@
 
 {% block content %}
 
-{% for catrow in catrows %}
-  {{ catrow.title }}
-{% endfor %}
-<hr>
-{% for nouserow in nouserows %}
-  {{ nouserow.title }}
-{% endfor %}
-<hr>
+{% filter markdown %}
+Your Markdown
+=============
+[yahoo](https://www.yahoo.co.jp/)
+{{ mystr }}
+{% endfilter %}
 
-{% for joinrow in joinrows %}
-  {{ joinrow.tag_id }}
-  {{ joinrow.title }}
-  {{ joinrow.map_id }}<br>
-{% endfor %}
 
 {% endblock %}

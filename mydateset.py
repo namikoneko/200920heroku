@@ -1,12 +1,20 @@
-from flask import Flask,render_template,request,redirect,url_for
+from flask import Flask,render_template,request,redirect,url_for,Markup
 from datetime import date,datetime
 import os
 import dataset
 import time
+from flaskext.markdown import Markdown
 
 db = dataset.connect('sqlite:///test.db')
 
 app = Flask(__name__)
+
+Markdown(app)
+
+@app.route('/markdown')
+def markdown():
+    mystr = "mmmyyy   ssstttrrr"
+    return render_template('test.html',mystr=mystr)
 
 @app.route('/dict/<id>')
 def mydict(id):
